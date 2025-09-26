@@ -1,34 +1,34 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { User } from '../types';
-import { loadUsersFromLocalStorage, saveUsersToLocalStorage } from '../storage';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { User } from '../lib/types';
+import initialData from '../data/users.json';
+import { useLocalStorage } from './useLocalStorage';
 
 export const useUsers = () => {
-	const [users, setUsers] = useState<User[]>([]);
+	const [users, setUsers] = useLocalStorage<User[]>('raffle_users', initialData);
 	const [isInitialized, setIsInitialized] = useState(false);
 
 	useEffect(() => {
-		setUsers(loadUsersFromLocalStorage());
 		setIsInitialized(true);
 	}, []);
 
-	useEffect(() => {
-		if (isInitialized) {
-			saveUsersToLocalStorage(users);
-		}
-	}, [users, isInitialized]);
+	const addUser = useCallback(
+		(user: Omit<User, 'id'>) => {
+			const newUser: User = { ...user, id: crypto.randomUUID() };
+			setUsers((prevUsers) => [...prevUsers, newUser]);
+		},
+		[setUsers]
+	);
 
-	const addUser = useCallback((user: Omit<User, 'id'>) => {
-		const newUser: User = { ...user, id: crypto.randomUUID() };
-		setUsers((prevUsers) => [...prevUsers, newUser]);
-	}, []);
-
-	const updateUser = useCallback((updatedUser: User) => {
-		setUsers((prevUsers) =>
-			prevUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user))
-		);
-	}, []);
+	const updateUser = useCallback(
+		(updatedUser: User) => {
+			setUsers((prevUsers) =>
+				prevUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+			);
+		},
+		[setUsers]
+	);
 
 	const isNameTaken = useCallback(
 		(name: string, currentUserId: string | null = null) => {

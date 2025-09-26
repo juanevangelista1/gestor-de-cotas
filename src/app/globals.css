@@ -1,18 +1,23 @@
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #fcfcfc;
-  --foreground: #111827;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #111827;
-    --foreground: #f9fafb;
+/* Estilos para a tabela responsiva em telas menores */
+@media (max-width: 768px) {
+  .responsive-table thead {
+    @apply hidden;
   }
-}
-
-body {
-  background-color: var(--background);
-  color: var(--foreground);
+  .responsive-table tr {
+    @apply block mb-4 border-b-2 border-gray-200 dark:border-gray-700;
+  }
+  .responsive-table td {
+    @apply block text-right text-sm border-b border-dotted border-gray-200 dark:border-gray-700 p-2;
+  }
+  .responsive-table td::before {
+    content: attr(data-label);
+    @apply float-left font-semibold uppercase text-gray-600 dark:text-gray-400;
+  }
+  .responsive-table td:last-child {
+    @apply border-b-0;
+  }
 }

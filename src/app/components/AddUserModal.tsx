@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { User } from '@/lib/types';
+import { User } from '@/src/app/lib/types';
 
 interface AddUserModalProps {
 	isOpen: boolean;

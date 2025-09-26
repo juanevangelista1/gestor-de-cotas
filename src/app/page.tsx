@@ -1,9 +1,14 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { User } from '@/lib/types';
-import { useUsers } from '@/lib/hooks/useUsers';
+import { User } from './lib/types';
+import { useUsers } from './hooks/useUsers';
+import useDebounce from './hooks/useDebounce';
 
+import { Header } from './components/layout/Header';
+import { Footer } from './components/layout/Footer';
+import { SearchAndFilter } from './components/ui/SearchAndFilter';
+import { AddUserButton } from './components/ui/AddUserButton';
 import { UserList } from './components/UserList';
 import { UserNumbersModal } from './components/UserNumbersModal';
 import { AddUserModal } from './components/AddUserModal';
@@ -14,22 +19,26 @@ export default function HomePage() {
 	const [selectedUser, setSelectedUser] = useState<User | null>(null);
 	const [editingUser, setEditingUser] = useState<User | null>(null);
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
 	const [searchByName, setSearchByName] = useState('');
 	const [searchByNumber, setSearchByNumber] = useState('');
 
+	const debouncedName = useDebounce(searchByName, 300);
+	const debouncedNumber = useDebounce(searchByNumber, 300);
+
 	const filteredUsers = useMemo(() => {
 		let result = users;
-		if (searchByName) {
-			result = result.filter((user) => user.name.toLowerCase().includes(searchByName.toLowerCase()));
+		if (debouncedName) {
+			result = result.filter((user) => user.name.toLowerCase().includes(debouncedName.toLowerCase()));
 		}
-		if (searchByNumber) {
-			const searchNum = parseInt(searchByNumber, 10);
+		if (debouncedNumber) {
+			const searchNum = parseInt(debouncedNumber, 10);
 			if (!isNaN(searchNum)) {
 				result = result.filter((user) => user.chosenNumbers.includes(searchNum));
 			}
 		}
-		return result;
-	}, [users, searchByName, searchByNumber]);
+		return result.sort((a, b) => new Date(b.hireDate).getTime() - new Date(a.hireDate).getTime());
+	}, [users, debouncedName, debouncedNumber]);
 
 	const handleSaveUser = (userData: Omit<User, 'id'> | User) => {
 		if ('id' in userData) {
@@ -56,54 +65,42 @@ export default function HomePage() {
 
 	if (!isInitialized) {
 		return (
-			<div className='flex h-screen items-center justify-center'>
-				<p className='text-lg animate-pulse'>Carregando dados da rifa...</p>
-			</div>
+			<div className='flex h-screen items-center justify-center text-gray-500'>Carregando...</div>
 		);
 	}
 
 	return (
 		<div className='flex flex-col min-h-screen'>
 			<main className='flex-grow container mx-auto p-4 md:p-8'>
-				<header className='text-center mb-10'>
-					<h1 className='text-5xl font-extrabold tracking-tight'>Rifa Yasmin</h1>
-					<p className='text-lg text-gray-500 mt-2'>Gestor de Cotas e Participantes</p>
-				</header>
-
-				<div className='mb-6 p-4 bg-gray-50/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700'>
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-4 items-center'>
-						<input
-							type='text'
-							placeholder='Pesquisar por nome...'
-							value={searchByName}
-							onChange={(e) => setSearchByName(e.target.value)}
-							className='p-2 border border-gray-300 rounded-md bg-transparent'
+				<Header />
+				<div className='bg-white dark:bg-gray-800/50 rounded-lg shadow-md p-4 sm:p-6'>
+					<div className='flex flex-col md:flex-row justify-between items-center gap-4 mb-6'>
+						<SearchAndFilter
+							searchByName={searchByName}
+							setSearchByName={setSearchByName}
+							searchByNumber={searchByNumber}
+							setSearchByNumber={setSearchByNumber}
 						/>
-						<input
-							type='number'
-							placeholder='Pesquisar por número...'
-							value={searchByNumber}
-							onChange={(e) => setSearchByNumber(e.target.value)}
-							className='p-2 border border-gray-300 rounded-md bg-transparent'
-						/>
-						<button
-							onClick={handleOpenAddModal}
-							className='w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors cursor-pointer'>
-							Adicionar Pessoa
-						</button>
+						<AddUserButton onClick={handleOpenAddModal} />
 					</div>
+					{filteredUsers.length > 0 ? (
+						<UserList
+							users={filteredUsers}
+							onSelectUser={setSelectedUser}
+							onEditUser={handleOpenEditModal}
+						/>
+					) : (
+						<div className='text-center py-16'>
+							<p className='text-gray-500'>Nenhum participante encontrado.</p>
+							<p className='text-sm text-gray-400 mt-2'>
+								Clique em &quot;Adicionar Pessoa&quot; para começar.
+							</p>
+						</div>
+					)}
 				</div>
-
-				<UserList
-					users={filteredUsers}
-					onSelectUser={setSelectedUser}
-					onEditUser={handleOpenEditModal}
-				/>
 			</main>
 
-			<footer className='text-center p-4 text-gray-500 border-t dark:border-gray-800'>
-				Feito com ❤️ por Juan Evangelista
-			</footer>
+			<Footer />
 
 			<UserNumbersModal
 				user={selectedUser}
