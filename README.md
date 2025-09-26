@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rifa Yasmin - Gestor de Cotas
 
-## Getting Started
+## 📝 Descrição
 
-First, run the development server:
+Este projeto é uma aplicação web moderna para gerenciamento de cotas de rifas. Permite cadastrar participantes, registrar seus números, controlar pagamentos e realizar buscas de forma rápida e eficiente. Todos os dados são salvos localmente no navegador para persistência, garantindo que nenhuma informação seja perdida entre as sessões.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Funcionalidades
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Cadastro de Participantes:** Adicione novas pessoas com nome, telefone, quantidade de cotas e números escolhidos.
+- **Edição e Atualização:** Modifique informações de participantes existentes, incluindo a adição de mais cotas e números.
+- **Controle de Pagamento:** Marque facilmente se uma cota foi paga ou está pendente.
+- **Visualização Rápida:** Clique no nome de um participante para ver seus números em um modal.
+- **Busca Inteligente:** Pesquise participantes por nome ou por um número específico.
+- **Persistência Automática:** Os dados são salvos automaticamente no `localStorage` do navegador, sem necessidade de ações manuais.
+- **Validações Robustas:** O sistema impede o cadastro de nomes ou números duplicados.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Tecnologias Utilizadas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js 15:** Framework React para produção.
+- **React 19:** Biblioteca para construção de interfaces de usuário.
+- **TypeScript:** Superset do JavaScript que adiciona tipagem estática.
+- **Tailwind CSS:** Framework de CSS utility-first para estilização rápida e moderna.
 
-## Learn More
+## 🏃‍♀️ Como Executar o Projeto
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone o repositório:**
+   ```bash
+   git clone <url-do-seu-repositorio>
+   ```
+2. **Navegue até a pasta do projeto:**
+   ```bash
+   cd gestor-de-cotas
+   ```
+3. **Instale as dependências:**
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
+4. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   ```
+5. Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver a aplicação.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feito com ❤️ por Juan Evangelista
