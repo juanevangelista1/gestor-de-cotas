@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { User } from '@/src/app/lib/types';
+import { User } from '@/src/lib/types';
 
 interface AddUserModalProps {
 	isOpen: boolean;
@@ -180,7 +180,7 @@ export function AddUserModal({
 						</button>
 						<button
 							type='submit'
-							className='py-2 px-4 rounded-md font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer'>
+							className='py-2 px-4 rounded-md font-semibold bg-pink-600 text-white hover:bg-pink-700 transition-colors cursor-pointer'>
 							{isEditMode ? 'Salvar Alterações' : 'Adicionar'}
 						</button>
 					</div>

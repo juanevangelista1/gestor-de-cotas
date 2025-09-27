@@ -1,5 +1,5 @@
 import { User } from './types';
-import initialUsers from '../data/users.json';
+import initialUsers from '../app/data/users.json';
 
 const STORAGE_KEY = 'raffle_users_yasmin';
 

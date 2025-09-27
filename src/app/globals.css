@@ -1,48 +1,49 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	--background: #ffffff;
+	--foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+	}
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	background: var(--background);
+	color: var(--foreground);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+	cursor: pointer;
 }
 
 @media (max-width: 768px) {
-  .responsive-table thead {
-    @apply hidden;
-  }
-  .responsive-table tr {
-    @apply block mb-4 border-b-2 border-gray-200 dark:border-gray-700;
-  }
-  .responsive-table td {
-    @apply block text-right text-sm border-b border-dotted border-gray-200 dark:border-gray-700 p-2;
-  }
-  .responsive-table td::before {
-    content: attr(data-label);
-    @apply float-left font-semibold uppercase text-gray-600 dark:text-gray-400;
-  }
-  .responsive-table td:last-child {
-    @apply border-b-0;
-  }
+	.responsive-table thead {
+		display: none;
+	}
+	.responsive-table tr {
+		display: block;
+		margin-bottom: 0.625rem;
+		border-bottom: 2px solid #ddd;
+	}
+	.responsive-table td {
+		display: block;
+		text-align: right;
+		font-size: 0.875rem;
+		border-bottom: 1px dotted #ccc;
+	}
+	.responsive-table td::before {
+		content: attr(data-label);
+		float: left;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+	.responsive-table td:last-child {
+		border-bottom: 0;
+	}
 }

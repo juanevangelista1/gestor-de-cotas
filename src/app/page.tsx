@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { User } from './lib/types';
+import { User } from '../lib/types';
 import { useUsers } from './hooks/useUsers';
 import useDebounce from './hooks/useDebounce';
 

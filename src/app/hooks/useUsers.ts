@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { User } from '../lib/types';
+import { User } from '../../lib/types';
 import initialData from '../data/users.json';
 import { useLocalStorage } from './useLocalStorage';
 
