@@ -8,7 +8,7 @@ import useDebounce from './hooks/useDebounce';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { SearchAndFilter } from './components/ui/SearchAndFilter';
-import { AddUserButton } from './components/ui/AddUserButton';
+import { ExportButtons } from './components/ui/ExportButtons';
 import { UserList } from './components/UserList';
 import { UserNumbersModal } from './components/UserNumbersModal';
 import { AddUserModal } from './components/AddUserModal';
@@ -71,8 +71,8 @@ export default function HomePage() {
 
 	return (
 		<div className='flex flex-col min-h-screen'>
+			<Header onOpenAddModal={handleOpenAddModal} />
 			<main className='flex-grow container mx-auto p-4 md:p-8'>
-				<Header />
 				<div className='bg-white dark:bg-gray-800/50 rounded-lg shadow-md p-4 sm:p-6'>
 					<div className='flex flex-col md:flex-row justify-between items-center gap-4 mb-6'>
 						<SearchAndFilter
@@ -81,7 +81,9 @@ export default function HomePage() {
 							searchByNumber={searchByNumber}
 							setSearchByNumber={setSearchByNumber}
 						/>
-						<AddUserButton onClick={handleOpenAddModal} />
+						<div className='flex flex-col md:flex-row justify-end items-center gap-4 w-full md:w-auto'>
+							<ExportButtons users={filteredUsers} />
+						</div>
 					</div>
 					{filteredUsers.length > 0 ? (
 						<UserList
@@ -99,9 +101,7 @@ export default function HomePage() {
 					)}
 				</div>
 			</main>
-
 			<Footer />
-
 			<UserNumbersModal
 				user={selectedUser}
 				onClose={() => setSelectedUser(null)}

@@ -1,6 +1,11 @@
 import { PiggyBank } from 'lucide-react';
+import { AddUserButton } from '../ui/AddUserButton'; // Importe o botão
 
-export function Header() {
+interface HeaderProps {
+	onOpenAddModal: () => void;
+}
+
+export function Header({ onOpenAddModal }: HeaderProps) {
 	return (
 		<header className='text-center pt-4 pb-10'>
 			<div className='inline-flex items-center gap-3'>
@@ -12,6 +17,9 @@ export function Header() {
 					<p className='text-md sm:text-lg text-gray-500 dark:text-gray-400 mt-1'>
 						Gestor de Cotas e Participantes
 					</p>
+				</div>
+				<div className='hidden md:block absolute right-8 top-12'>
+					<AddUserButton onClick={onOpenAddModal} /> {/* Renderize o botão aqui */}
 				</div>
 			</div>
 		</header>
